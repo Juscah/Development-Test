@@ -1,0 +1,113 @@
+﻿@{ ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Pie Chart</h2>
+        <div>
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h2>Bar Chart</h2>
+        <div>
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h2>Line Chart</h2>
+        <div>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script>
+        const pieChartData = {
+            labels:
+                @Html.Raw(ViewBag.TopProducts)
+            ,
+            datasets: [{
+                label: 'Top 5 Selling Products',
+                data:
+                    @Html.Raw(ViewBag.ProductSales)
+                ,
+                backgroundColor: [
+                    '#7a51b5',
+                    '#FF9688',
+                    '#8BB34a',
+                    '#FFFF00',
+                    '#0xffff'
+                ],
+                hoverOffset: 5
+            }]
+        };
+
+        const barChartData = {
+            labels:
+                @Html.Raw(ViewBag.Categories)
+            ,
+            datasets: [{
+                label: 'Products Per Category',
+                data:
+                    @Html.Raw(ViewBag.CategoryCount)
+                ,
+                backgroundColor: [
+                    '#7a51b5',
+                ],
+                hoverOffset: 5
+            }]
+        };
+
+        const lineChartData = {
+            labels:
+            
+                @Html.Raw(ViewBag.Dates)
+            ,
+            datasets: [{
+                label: 'Number of customers added on date',
+                data:
+                    @Html.Raw(ViewBag.AddedCounts)
+                ,
+                backgroundColor: [
+                    '#7a51b5',
+                ],
+                hoverOffset: 5
+            }]
+        };
+
+        const pieConfig = {
+            type: 'pie',
+            data: pieChartData,
+        };
+
+        const barConfig = {
+            type: 'bar',
+            data: barChartData,
+        };
+
+        const lineConfig = {
+            type: 'line',
+            data: lineChartData,
+        };
+
+        var myPieChart = new Chart(
+            document.getElementById('pieChart'),
+            pieConfig
+        );
+
+        var myBarChart = new Chart(
+            document.getElementById('barChart'),
+            barConfig
+        );
+
+        var myLineChart = new Chart(
+            document.getElementById('lineChart'),
+            lineConfig
+        );
+    </script>
+}
